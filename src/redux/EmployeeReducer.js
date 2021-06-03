@@ -11,7 +11,9 @@ const EMPLOYEE_DELETE = "EMPLOYEE_DELETE";
 const EMPLOYEE_GET_ALL = "EMPLOYEE_GET_ALL";
 const EMPLOYEE_GET_BY_ID = "EMPLOYEE_GET_BY_ID";
 
-//ACTIONS..>>
+const REF_EMPLOYEE = "REF_EMPLOYEE";
+
+//ACTIONS..>> components are intreacting vth these actions
 export function createEmployeeAction(payload) {
   return { type: EMPLOYEE_CREATE, payload: payload };
 }
@@ -32,12 +34,15 @@ export function getByIdEmployeeAction(payload) {
   return { type: EMPLOYEE_GET_BY_ID, payload: payload };
 }
 
+export function updateRefEmployee(payload) {
+  return { type: REF_EMPLOYEE, payload: payload };
+}
+
 //reducer logicc..
- export function EmployeeReducer(state = initState, action) {
+export function EmployeeReducer(state = initState, action) {
   switch (action.type) {
     case EMPLOYEE_CREATE:
-      //todo
-      return state;
+      return { ...state, list: [action.payload, ...state.list] };
 
     case EMPLOYEE_UPDATE:
       //todo
@@ -45,7 +50,10 @@ export function getByIdEmployeeAction(payload) {
 
     case EMPLOYEE_DELETE:
       //todo
-      return state;
+      const oldList = state.list;
+      oldList.splice(action.payload, 1);
+      console.log("OL", oldList);
+      return { ...state, list: [...oldList] };
 
     case EMPLOYEE_GET_ALL:
       //todo
@@ -54,6 +62,9 @@ export function getByIdEmployeeAction(payload) {
     case EMPLOYEE_GET_BY_ID:
       //todo
       return state;
+
+    case REF_EMPLOYEE:
+      return { ...state, refemp: action.payload };
 
     default:
       return state;
