@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import {
   deleteEmployeeAction,
+  getAllEmployeeAction,
   updateRefEmployee,
 } from "../redux/EmployeeReducer";
 
@@ -14,8 +15,13 @@ export function EmployeeList() {
 
   const [successOperation, setSuccessOperation] = useState(false);
 
+  // Used to Initialize :: READ THE DATA FROM API
+  useEffect(() => {
+    dispatch(getAllEmployeeAction());
+  }, []);
+
   const deleteEmployee = (item, index) => {
-    dispatch(deleteEmployeeAction(index));
+    dispatch(deleteEmployeeAction(item));
 
     setSuccessOperation(true);
     setTimeout(() => setSuccessOperation(false), 2000);
@@ -33,7 +39,7 @@ export function EmployeeList() {
     <div className="row">
       <div className="col-3 col-md-2 d-none d-md-block"></div>
       <div className="col-12 col-md-8">
-        <h3 className="alert alert-secondary">Employee List</h3>
+        <h3 className="alert alert-info">Employee List</h3>
 
         {successOperation && (
           <div className="alert alert-success">Opeation Success</div>
@@ -53,10 +59,10 @@ export function EmployeeList() {
           <tbody>
             {[...state.employee.list].map((item, index) => (
               <tr key={index}>
-                <th scope="row">{index + 1}</th>
+                <th scope="row">{item.id}</th>
                 <td>{item.userName}</td>
-                <td>{item.password}</td>
-                <td>{item.email}</td>
+                <td>{"*******"}</td>
+                <td>{"******@gmail.com"}</td>
                 <td>{item.mobile}</td>
                 <td>
                   <input
@@ -64,7 +70,7 @@ export function EmployeeList() {
                     onClick={() => updateEmployee(item)}
                     value="Edit"
                     className="btn btn-link"
-                  />{" "}
+                  />
                   /
                   <input
                     type="button"
