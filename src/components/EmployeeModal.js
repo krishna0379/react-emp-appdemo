@@ -13,9 +13,11 @@ export function EmployeeModal() {
   return (
     <Modal show={state.employee.refemp.id} onHide={() => updateRefObj()}>
       <Modal.Header closeButton>
-        <Modal.Title>Hello, {state.employee.refemp.userName}</Modal.Title>
+        <Modal.Title className="bg-primary">
+          Hello, {state.employee.refemp.userName}
+        </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="alert alert-secondary">
         <ListGroup>
           <ListGroup.Item>
             First Name - {state.employee.refemp.firstName}
@@ -34,7 +36,7 @@ export function EmployeeModal() {
         </ListGroup>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => updateRefObj()}>
+        <Button variant="danger" onClick={() => updateRefObj()}>
           Close
         </Button>
       </Modal.Footer>
