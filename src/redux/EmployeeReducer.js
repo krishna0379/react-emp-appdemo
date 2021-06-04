@@ -86,7 +86,16 @@ export function getAllEmployeeAction(payload) {
 }
 
 export function getByIdEmployeeAction(payload) {
-  return { type: EMPLOYEE_GET_BY_ID, payload: payload };
+  // return { type: EMPLOYEE_GET_BY_ID, payload: payload };
+
+  return async (dispatch) => {
+    const url = `http://localhost:8090/api/employee/${payload.id}`;
+    const response = await fetch(url);
+    const employeeObj = await response.json();
+
+    // this wil update the refemp
+    dispatch(updateRefEmployee(employeeObj));
+  };
 }
 
 export function updateRefEmployee(payload) {
@@ -98,9 +107,11 @@ export function EmployeeReducer(state = initState, action) {
   switch (action.type) {
     case EMPLOYEE_CREATE:
       return { ...state, list: [action.payload, ...state.list] };
+
     case EMPLOYEE_UPDATE:
       // TODO
       return state;
+
     case EMPLOYEE_DELETE:
       // TODO
       const oldList = state.list;
@@ -108,9 +119,11 @@ export function EmployeeReducer(state = initState, action) {
       console.log("OL", oldList);
 
       return { ...state, list: [...oldList] };
+
     case EMPLOYEE_GET_ALL:
       // Update the list
       return { ...state, list: action.payload };
+
     case EMPLOYEE_GET_BY_ID:
       // TODO
       return state;
