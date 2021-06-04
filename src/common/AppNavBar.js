@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export function AppNavBar() {
   return (
-    <Navbar bg="primary" expand="lg" variant="dark">
+    <Navbar bg="primary" expand="true" sticky="top" variant="light">
       <Navbar.Brand as={Link} to="/">
         EMS APP
       </Navbar.Brand>
