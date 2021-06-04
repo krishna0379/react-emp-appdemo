@@ -2,6 +2,7 @@ const initState = {
   employee: {},
   list: [],
 
+  refemp: {},
   sampleList: ["Delhi", "Kolkata", "hyd", "vizag"],
 };
 //action types

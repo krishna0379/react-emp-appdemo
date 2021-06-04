@@ -9,6 +9,7 @@ function App() {
   return (
     <Router>
       <AppNavBar />
+      
       <Switch>
         <Route path="/create-employee">
           <EmployeeUpsert />

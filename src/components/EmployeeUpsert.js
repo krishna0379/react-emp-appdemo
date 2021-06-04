@@ -44,7 +44,7 @@ export function EmployeeUpsert() {
 
     // A1 sucess
     setSuccessOperation(true);
-    setTimeout(() => setSuccessOperation(false), 5000);
+    setTimeout(() => setSuccessOperation(false), 4000);
 
     // A2: navigate to another page
     // history.push("/list-employee");
@@ -79,7 +79,7 @@ export function EmployeeUpsert() {
             value={firstName}
             onChange={(e) => updateFirstName(e)}
             className="form-control"
-            placeholder="Enter First name"
+            placeholder="Enter Firstname"
           />
         </div>
 
