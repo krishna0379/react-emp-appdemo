@@ -14,21 +14,76 @@ const EMPLOYEE_GET_BY_ID = "EMPLOYEE_GET_BY_ID";
 
 const REF_EMPLOYEE = "REF_EMPLOYEE";
 
-//ACTIONS..>> components are intreacting vth these actions
+// ACTIONS :: COmponents are interacting with this action
+// ACTIONS :: COmponents are interacting with this action
 export function createEmployeeAction(payload) {
-  return { type: EMPLOYEE_CREATE, payload: payload };
+  // return { type: EMPLOYEE_CREATE, payload: payload };
+
+  // MAKE SURE redux-thunk is installed.
+  return async (dispatch) => {
+    // WE HV TO CALL THE SPRINT1 / SPRING BOOT
+    const url = "http://localhost:8090/api/employee/";
+    const requestBody = { ...payload, age: 30 };
+
+    // HTTP Client
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    });
+
+    // UPDATE THE UI
+    dispatch({ type: EMPLOYEE_CREATE, payload: payload });
+  };
 }
 
 export function updateEmployeeAction(payload) {
-  return { type: EMPLOYEE_UPDATE, payload: payload };
+  // return { type: EMPLOYEE_UPDATE, payload: payload };
+  return async (dispatch) => {
+    // WE HV TO CALL THE SPRINT1 / SPRING BOOT
+    const url = `http://localhost:8090/api/employee/${payload.id}`;
+    const requestBody = { ...payload, age: 25 };
+
+    await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    });
+
+    // update the ui.
+    dispatch(updateRefEmployee({}));
+  };
 }
 
 export function deleteEmployeeAction(payload) {
-  return { type: EMPLOYEE_DELETE, payload: payload };
+  // return { type: EMPLOYEE_DELETE, payload: payload };
+
+  // redux thunk
+  return async (dispatch) => {
+    const url = `http://localhost:8090/api/employee/${payload.id}`;
+    await fetch(url, { method: "DELETE" });
+
+    // update the ui.
+    dispatch(getAllEmployeeAction());
+  };
 }
 
 export function getAllEmployeeAction(payload) {
-  return { type: EMPLOYEE_GET_ALL, payload: payload };
+  // return { type: EMPLOYEE_GET_ALL, payload: payload };
+
+  // API CALL/BACKEND CALL / REDUX-THUNK IS THERE
+  return async (dispatch) => {
+    // WE HV TO CALL THE SPRINT1 / SPRING BOOT
+    const url = "http://localhost:8090/api/employee/";
+
+    // HTTP Client / POSTMAN / SWAGGER
+    const response = await fetch(url);
+    const employeList = await response.json();
+    console.log(employeList);
+
+    // Update the UI
+    dispatch({ type: EMPLOYEE_GET_ALL, payload: employeList });
+  };
 }
 
 export function getByIdEmployeeAction(payload) {
@@ -39,29 +94,26 @@ export function updateRefEmployee(payload) {
   return { type: REF_EMPLOYEE, payload: payload };
 }
 
-//reducer logicc..
+// REDUCER LOGIC
 export function EmployeeReducer(state = initState, action) {
   switch (action.type) {
     case EMPLOYEE_CREATE:
       return { ...state, list: [action.payload, ...state.list] };
-
     case EMPLOYEE_UPDATE:
-      //todo
+      // TODO
       return state;
-
     case EMPLOYEE_DELETE:
-      //todo
+      // TODO
       const oldList = state.list;
       oldList.splice(action.payload, 1);
       console.log("OL", oldList);
+
       return { ...state, list: [...oldList] };
-
     case EMPLOYEE_GET_ALL:
-      //todo
-      return state;
-
+      // Update the list
+      return { ...state, list: action.payload };
     case EMPLOYEE_GET_BY_ID:
-      //todo
+      // TODO
       return state;
 
     case REF_EMPLOYEE:
