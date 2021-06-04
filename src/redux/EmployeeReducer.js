@@ -15,13 +15,12 @@ const EMPLOYEE_GET_BY_ID = "EMPLOYEE_GET_BY_ID";
 const REF_EMPLOYEE = "REF_EMPLOYEE";
 
 // ACTIONS :: COmponents are interacting with this action
-// ACTIONS :: COmponents are interacting with this action
 export function createEmployeeAction(payload) {
   // return { type: EMPLOYEE_CREATE, payload: payload };
 
-  // MAKE SURE redux-thunk is installed.
+  // we hav to install tye redux-thunk mmainly..>> later thse actons works..
   return async (dispatch) => {
-    // WE HV TO CALL THE SPRINT1 / SPRING BOOT
+    //here we make call vth the backend..>> sprint application..
     const url = "http://localhost:8090/api/employee/";
     const requestBody = { ...payload, age: 30 };
 
